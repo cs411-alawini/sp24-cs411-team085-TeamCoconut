@@ -8,12 +8,11 @@
 | Captain     |Yuchenm6@illinois.edu   |
 | Member1     |        Zejia Chong       |
 | Member1     |   zejiajc2@illinois.edu  |
-| Member2     |                        |
-| Member2     |                        |
-| Member3     |                        |
-| Member3     |                        |
-| Member4     |                        |
-| Member4     |                        |
+| Member2     |    Yan Bai                    |
+| Member2     |  yanb2@illinois.edu                      |
+| Member3     |Yiyang Liu                        |
+| Member3     |yiyang34@illinois.edu                        |
+
 
 ## Project Information
 

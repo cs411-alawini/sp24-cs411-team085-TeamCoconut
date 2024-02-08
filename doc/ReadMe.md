@@ -77,6 +77,24 @@ This is a dataset that contains information about NBA games, players, and salari
 
 ![2IJ83JZ2oImCSCywaDDuK-XtiQ1ARknz7SOOHL8Xhh1qZ_f5aWmYSOlARVHYjoBnvVqCbCNMsvJUdV7zh5GB3Bpgcy0uCCqtg-ukX5dQZGGisCZJhpOzVLGWF3k4](https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/9e4f576f-d8f5-49c5-bd4e-27796b5f1b46)
 
+## Project Distribution
+#### Database Management: 
+Implement and manage the database operations based on API requests. This includes handling user preferences, song data, and user interactions like likes and dislikes.
+>Responsibility:Yanb2 Yiyang34
+
+
+#### Backend API Development:
+Develop and maintain server-side logic to ensure smooth communication between the frontend interface and the database. This involves creating robust, scalable APIs that can handle a high volume of requests efficiently.
+>Responsibility: Yanb2 Zejiajc2
+
+#### Frontend UI Design:
+Design and implement the user interface and experience of the application, focusing on usability, aesthetics, and responsiveness across devices. This role requires a keen eye for design and attention to detail to create engaging and intuitive interfaces.
+>Resposbility:Yuchenm6 Yiyang34
+#### Frontend Development
+Implement the frontend architecture with a focus on responsiveness and cross-platform compatibility. 
+>Responsibility: Yuchenm6 Zejiajc2
+
+
 
 
 

@@ -1,7 +1,7 @@
 # Track1 Stage2
 
 ## ER Diagram
-![Stage2ERDiagram](https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/blob/main/assets/Stage2ERDiagram.png)
+![Stage2ERDiagram](https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/blob/main/doc/Stage2ERDiagram.png)
 
 ## Explaination of Each Entity and Relationship
 

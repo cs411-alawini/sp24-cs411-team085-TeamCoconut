@@ -9,8 +9,8 @@ The proposed relational schema is designed for NBA players and teams’ sports s
 
 
 - **User**
-  - **Description**: The ```User``` table holds personal information about each user, including a unique UserID, the user's name (```UserName```), email address (```Email```), and password (```Password```). The ```UserID``` serves as the primary key of the User table.
-  - **Assumption**: We assume that each user has a unique email address and that one user can follow multiple users and be followed by multiple users. Additionally, a user can have multiple statistical records but cannot be listed more than once within the ```User``` table.
+  - **Description**: The ```User``` table holds personal information about each user, including a unique Email Address (```EmailAddress```), the user's name (```UserName```), PlayerId (```PlayerId```)and password (```Password```). The ```EmailAddress``` serves as the primary key of the User table.
+  - **Assumption**: We assume that each user has a unique email address and that one user can follow multiple users and be followed by multiple users. Additionally, a user can have multiple statistical records but cannot be listed more than once within the ```EmailAddress``` table.
 
 - **Player**
   - **Description**: The ```Player``` table stores data related to individual players, including a unique PlayerID, a reference to their UserID, their position in the game (```PlayerPosition```), physical attributes like ```Height```. The ```PlayerID``` is the primary key of the table.

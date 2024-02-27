@@ -55,8 +55,8 @@ Our relational structure meets the BCNF criteria because each functional depende
 
 ```
 User (
-    UserName: VARCHAR(100) [PK],
-    EmailAddress: VARCHAR(255),
+    UserName: VARCHAR(100),
+    EmailAddress: VARCHAR(255) [PK],
     Password: VARCHAR(255),
     PlayerID: VARCHAR(255) [FK]
 )

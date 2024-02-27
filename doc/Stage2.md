@@ -5,6 +5,9 @@
 
 ## Explaination of Each Entity and Relationship
 
+The proposed relational schema is designed for NBA players and teams’ sports statistics system that stores information about users, players, teams, statistics, and salary contracts. The database schema consists of five tables: User, Player, Team, and SalaryContracts. We aligned our schema data types using datasets on NBA current and historical players we found on Kaggle. 
+
+
 - **User**
   - **Description**: The ```User``` table holds personal information about each user, including a unique UserID, the user's name (```UserName```), email address (```Email```), and password (```Password```). The ```UserID``` serves as the primary key of the User table.
   - **Assumption**: We assume that each user has a unique email address and that one user can follow multiple users and be followed by multiple users. Additionally, a user can have multiple statistical records but cannot be listed more than once within the ```User``` table.

@@ -30,21 +30,23 @@
 The entire relational schema is already in BCNF. We opted for BCNF to guarantee strong data integrity and minimize redundancies, given our emphasis on accurately associating Statistics with each player and the need for frequent updates with match data. BCNF was chosen over 3NF due to its stricter standards, aligning with our data integrity objectives.
 
 ```
-User (UserName, EmailAddress, Password)
-FD: UserName → EmailAddress, Password
+User (UserName, EmailAddress, Password, PlayerID)
+FD: UserName → EmailAddress, Password, PlayerID
 
-Player (PlayerID, PlayerPosition, Height)
-FD: PlayerID → PlayerPosition, Height
+Player (PlayerID, PlayerPosition, Height, TeamID, College/Origin)
+FD: PlayerID → PlayerPosition, Height, TeamID, College/Origin
 
 Team (TeamID, TeamDivision, Records)
 FD: TeamID → TeamDivision, Records
 
-Statistics (BasicStatistics, AccumulatedStatistics, HighEndPerformance)
-FD: PlayerID  → BasicStatistics, AccumulatedStatistics, HighEndPerformance
+Statistics (CombinedID, BasicStatistics, AccumulatedStatistics, HighEndPerformance)
+FD: CombinedID → BasicStatistics, AccumulatedStatistics, HighEndPerformance
 
 SalaryContracts (ContractID, AnnualSalary, LifeTimeEarned, CurrentContract, Worthiness)
-FD: ContractID  → AnnualSalary, LifeTimeEarned, CurrentContract, Worthiness
+FD: ContractID → AnnualSalary, LifeTimeEarned, CurrentContract, Worthiness
 ```
+
+Our relational structure meets the BCNF criteria because each functional dependency $X\to Y$ has $X$ as a superkey. Each entity possesses its own ID (like ```UserName, PlayerID, TeamID, and ContractID```) enabling identification and access to other attributes, thus avoiding redundancies. 
 
 ## Convert to a Relational Schema
 

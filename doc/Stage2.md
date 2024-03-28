@@ -58,14 +58,14 @@ User (
     UserName: VARCHAR(100),
     EmailAddress: VARCHAR(255) [PK],
     Password: VARCHAR(255),
-    PlayerID: VARCHAR(255) [FK]
+    PlayerID: VARCHAR(255)
 )
 
 Player (
     PlayerID: CHAR(100) [PK],
     PlayerPosition: VARCHAR(100),
     Height: VARCHAR(50),
-    Team ID: VARCHAR(255) [FK],
+    Team ID: VARCHAR(255)
     College: VARCHAR(255)
 )
 
@@ -76,17 +76,27 @@ Team (
 )
 
 Statistics (
-    CombinedID: CHAR(100) [PK],
+    Combined ID: VARCHAR(255) [PK],
     BasicStatistics: VARCHAR(255),
     AccumulatedStatistics: VARCHAR(255),
     HighEndPerformance: VARCHAR(255)
 )
 
 SalaryContracts (
-    ContractID: CHAR(100) [PK],
+    Contract ID: VARCHAR(255) [PK],
     AnnualSalary: VARCHAR(255),
     LifeTimeEarned: VARCHAR(255),
     CurrentContract: VARCHAR(255),
     Worthiness: VARCHAR(255)
+)
+
+Follows (
+    User.EmailAdress: VARCHAR(255) [PK]
+    Players.PlayerID: CHAR(100) [PK]
+)
+
+Has (
+    SalaryContracts.ContractID: VARCHAR(255) [PK]
+    Players.PlayerID: CHAR(100) [PK]
 )
 ```

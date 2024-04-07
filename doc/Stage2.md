@@ -56,7 +56,7 @@ Our relational structure meets the BCNF criteria because each functional depende
 ```
 User (
     UserName: VARCHAR(100),
-    EmailAddress: VARCHAR(255) [PK],
+    EmailAddress: VARCHAR(255)[PK],
     Password: VARCHAR(255),
     PlayerID: VARCHAR(255)
 )
@@ -67,6 +67,8 @@ Player (
     Height: VARCHAR(50),
     Team ID: VARCHAR(255)
     College: VARCHAR(255)
+    Combined ID: VARCHAR(255)[FK],
+    Team ID: CHAR(8)[FK]
 )
 
 Team (
@@ -91,12 +93,12 @@ SalaryContracts (
 )
 
 Follows (
-    User.EmailAdress: VARCHAR(255) [PK]
-    Players.PlayerID: CHAR(100) [PK]
+    User.EmailAdress: VARCHAR(255) [PK][FK]
+    Players.PlayerID: CHAR(100) [PK][FK]
 )
 
 Has (
-    SalaryContracts.ContractID: VARCHAR(255) [PK]
-    Players.PlayerID: CHAR(100) [PK]
+    SalaryContracts.ContractID: VARCHAR(255) [PK][FK]
+    Players.PlayerID: CHAR(100) [PK][FK]
 )
 ```

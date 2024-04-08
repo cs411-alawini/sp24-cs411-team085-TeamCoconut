@@ -1,8 +1,9 @@
 
+
 # Track1 Stage2
 
 ## ER Diagram
-![Stage2 drawio-2](https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/0740eec4-dd48-4682-99ca-f18c58e8d1bc)
+![Stag2FinalVer](https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/86a707eb-2035-4311-be33-090f1c66a4fa)
 
 
 ## Explaination of Each Entity and Relationship

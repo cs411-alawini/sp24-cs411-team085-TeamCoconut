@@ -3,6 +3,43 @@
 
 <img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/05861f08-f8b2-4c36-9f1f-85c6309d6cd8">
 
+### Creating Tables SQL code:
+We have 6 Tables: SalaryContracts, Team, User, UserFollowsPlayers, Players, Stats
+<img width="297" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/ad1447ae-705e-45f0-b30e-01cc80725c38">
+
+SalaryContracts:
+CREATE TABLE SalaryContracts (
+    ContractID varchar(255) NOT NULL,
+    AnnualSalary varchar(255),
+    LifeTimeEarned varchar(255),
+    CurrentContract varchar(255),
+    Worthiness varchar(255),
+    PRIMARY KEY (ContractID)
+);
+
+<img width="324" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/da884502-a90b-435f-9ccd-969055dcfb59">
+
+Teams:
+CREATE TABLE Team (
+    TeamID char(20) NOT NULL,
+    TeamDivision varchar(100),
+    Records varchar(255),
+    TeamName varchar(255),
+    PRIMARY KEY (TeamID)
+);
+
+<img width="370" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/c0fcdad2-4e87-41e2-a48c-56387408d133">
+
+Users:
+CREATE TABLE User (
+    UserName varchar(100),
+    EmailAddress varchar(255) NOT NULL,
+    Password varchar(255),
+    PRIMARY KEY (EmailAddress)
+);
+
+<img width="301" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/03c21051-c531-48cf-a131-cd15a1ec92ea">
+
 
 ### Query 1
 

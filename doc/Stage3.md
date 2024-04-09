@@ -459,8 +459,6 @@ Cost of nested loop inner join is 811.55 and 464.70 respectively.
 
 The table shows that the cost in the nested loop inner join has indeed reduced from 1207.95 to 464.70, indicating an improvement. The reduction in cost in the nested loop inner join is likely due to a combination of filter pushdown optimization, effective index usage, and optimized join strategies by the database optimizer. This improvement signifies that the indexing strategy and query optimization techniques are indeed making a positive impact on the query performance.
 
-
-
 2.
 SELECT 
     p.name,

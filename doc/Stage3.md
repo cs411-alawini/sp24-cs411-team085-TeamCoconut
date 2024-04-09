@@ -258,6 +258,8 @@ LIMIT 15;
 ### Part 2:
 
 Part 2:
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/73528230-1d11-4c63-8733-6a352409cc49">
+
 1. 
 SELECT 
     p.TeamID,
@@ -327,6 +329,7 @@ LIMIT 15;
 
 
 
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/77c0c500-0047-43f4-8a00-160260afe820">
 
 For this query, we selected the player who scored the most points and analyzed his team and we also used another query that selected the players that played the most games, by Unioning these two queries for a set operation, we successfully found the player that played many games while have contributed a lot to his team(By selecting his teamID), we used these statistics to analysis his contact worthiness because the points he scored in a season can represent the most influence than other statistics such as rebound and blocks (blks and reb in our database, which we will do a similar query for this two).
 (SELECT 
@@ -392,6 +395,7 @@ ORDER BY
  Limit 15;
 
 
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/671ddcb1-322f-4cb6-9a0b-05aacc3d5741">
 
 
 1.
@@ -416,10 +420,12 @@ GROUP BY
 
 
 Before adding indexes:
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/8c9baf1b-502e-4701-aaed-a8899a72a49e">
 
 Cost of nested loop inner join is 1554.8 and 1207.95 respectively.
 
 After adding index to Team.Records only
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/2fd12919-8f57-4b31-8b94-278e6c87f4bd">
 
 Cost of nested loop inner join is 811.55 and 464.70 respectively.
 
@@ -434,6 +440,7 @@ Cost of nested loop inner join is 1554.8 and 1207.95 respectively.
 
 After indexing the Records column in the Team table, there was no significant change in the cost of the join in the provided query. While indexing can often improve query performance, its effectiveness depends on various factors such as selectivity, cardinality, index size, statistics, and query hints. In this case, indexing the “TeamName” column did not lead to noticeable performance gains, suggesting that further optimization strategies may be necessary or that the query itself may not be well-suited for index usage.
 
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/f8131385-a99a-4972-bd87-4d5bd2d5dcc4">
 
 
 
@@ -443,6 +450,7 @@ After indexing the Records column in the Team table, there was no significant ch
 
 
 After adding index to Team.Records and Team.TeamName
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/fe15c44a-d0a6-48e0-9651-69538af9cfa7">
 
 
 Cost of nested loop inner join is 811.55 and 464.70 respectively.
@@ -475,17 +483,21 @@ LIMIT 15;
 
 I attempted to optimize the query by indexing non-primary key attributes in 'GROUP BY' and 'ORDER BY'. Creating indexes on the players(name), SalaryContracts(AnnualSalary), and SalaryContracts(Worthiness) columns can potentially optimize the query. Since the query groups by sc.AnnualSalary, an index on this column can facilitate faster grouping operations. 
 Before adding indexes:
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/270d5b4a-1183-4b64-b576-89f4dd1389dd">
 
 Cost of nested loop inner join is 811.55 and 464.70 respectively.
 
 After adding index to Players.Name only
 CREATE INDEX idx_player_name ON players(name);
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/7e6dea29-cea5-4857-aaf7-21696f87404f">
 
 The cost did not change significantly.
 CREATE INDEX idx_salary_annual ON SalaryContracts(AnnualSalary);
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/06483e14-5fea-48f9-8ac1-f4906f27d424">
 
 The cost did not change significantly.
 CREATE INDEX idx_stats_pts ON stats(PTS);
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/60869c0c-2b93-493b-b333-895931eaf6c7">
 
 The cost did not change significantly. This might be due to the use of PTS in the SUM function, leading to index invalidation. This occurs because the database needs to perform a full table scan first to obtain the data, and then proceed with filtering and calculation, causing the index to become ineffective. Additionally, this is accompanied by performance issues.
 3.
@@ -520,6 +532,7 @@ JOIN
 ORDER BY 
     s.G DESC
 LIMIT 15);
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/29d7495f-6937-48a6-9e9f-cffd7b740918">
 
 Before adding indexes, After adding index to stats.G only, After adding index to stats.PTS only and After adding index to stats.G and stats.PTS all have the same results as shown below using EXPLAIN ANALYZE command. Four cost of nested loop inner join are all 811.55.
 
@@ -553,11 +566,16 @@ ORDER BY
     Followers DESC, 
     TotalPoints DESC
  Limit 15;
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/840abe56-c601-4174-8295-34ef7f6bccc6">
+
 I attempted to optimize the query by indexing non-primary key attributes in 'GROUP BY' and 'ORDER BY'. 
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/fc0fdb98-8eb0-41f1-b188-f849e63d9481">
 
 CREATE INDEX idx_stats_pts ON stats(PTS);
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/8b869f9c-1c38-4cee-8423-0bba699f5515">
 
 CREATE INDEX idx_ufp_email ON UserFollowsPlayer(Emailaddress);
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/6a6bf5ed-6294-44d7-a076-99fd0b5896dc">
 
 CREATE INDEX idx_salary_annualsalary ON SalaryContracts(AnnualSalary);
 

@@ -5,6 +5,8 @@
 
 ### Creating Tables SQL code:
 We have 6 Tables: SalaryContracts, Team, User, UserFollowsPlayers, Players, Stats
+
+
 <img width="297" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/ad1447ae-705e-45f0-b30e-01cc80725c38">
 
 SalaryContracts:

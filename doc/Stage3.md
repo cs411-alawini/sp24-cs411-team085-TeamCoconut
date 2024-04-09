@@ -1,4 +1,5 @@
-
+###Connection and Set Up Database on GCP
+<img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/05861f08-f8b2-4c36-9f1f-85c6309d6cd8">
 
 
 ### Query 1

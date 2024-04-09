@@ -491,11 +491,13 @@ After adding index to Players.Name only
 CREATE INDEX idx_player_name ON players(name);
 <img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/7e6dea29-cea5-4857-aaf7-21696f87404f">
 
-The cost did not change significantly.
+The cost did not change significantly.The reason might be the index is overly large or includes numerous columns, it might exceed memory capacity or generate more I/O operations compared to a full table scan.
+
 CREATE INDEX idx_salary_annual ON SalaryContracts(AnnualSalary);
 <img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/06483e14-5fea-48f9-8ac1-f4906f27d424">
 
-The cost did not change significantly.
+The cost did not change significantly.Given that an index possesses a wide array of distinct values, its likelihood of being employed is greater compared to an index characterized by a scarcity of unique values or a prevalence of repetitive entries.
+
 CREATE INDEX idx_stats_pts ON stats(PTS);
 <img width="468" alt="image" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/60869c0c-2b93-493b-b333-895931eaf6c7">
 

@@ -254,3 +254,313 @@ ORDER BY
     TotalPoints DESC
 LIMIT 15;
 ```
+
+### Part 2:
+
+Part 2:
+1. 
+SELECT 
+    p.TeamID,
+    t.TeamName,
+    SUM(s.PTS) AS TotalTeamScore,
+    AVG(s.ThreePP) AS AvgThreePointPercentage,
+    AVG(s.FTP) AS AvgFreeThrowPercentage
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerid = s.playerid
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+WHERE 
+    CAST(SUBSTRING_INDEX(t.Records, '-', 1) AS UNSIGNED) >= 40
+GROUP BY 
+    p.TeamID,
+    t.TeamName;
+This query is used to determine the relation for each individual team with a win-lost record >= 40 wins and see their 3 points percentage and their free throw percentage and we use this one to compare with the team with less than 40 wins. Notice that we have exactly 15 rows since there are only 30 teams in NBA, meanwhile, we also need to point out that the three percentage is lower than normal because there are some players in our database who played and retired before the three-point was invented, therefore their data for this column is 0, and significantly lowered our stats since a good 3 point shooter would usually have a 40% 3 point shot rate.
+
+SELECT 
+    p.TeamID,
+    t.TeamName,
+    SUM(s.PTS) AS TotalTeamScore,
+    AVG(s.ThreePP) AS AvgThreePointPercentage,
+    AVG(s.FTP) AS AvgFreeThrowPercentage
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerid = s.playerid
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+WHERE 
+    CAST(SUBSTRING_INDEX(t.Records, '-', 1) AS UNSIGNED) >= 40
+GROUP BY 
+    p.TeamID,
+    t.TeamName;
+
+
+
+
+
+By analyzing the output of this query, we can identify which players are delivering value in terms of their on-field performance relative to their salary and how this fits our algorithm with the 'worthiness' rating in their contract, which is our key feature.
+Please notice that some of our salary is generated since some players in the history didn’t share their detailed contracts with the public database. And we are only valued for one specific current season.
+
+SELECT 
+    p.name,
+    p.playerID,
+    SUM(s.PTS) AS TotalPoints,  
+    sc.AnnualSalary,
+    sc.Worthiness
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerid = s.playerid
+JOIN 
+    SalaryContracts sc ON p.ContractID = sc.ContractID
+GROUP BY 
+    p.name,
+    p.playerID,
+    sc.AnnualSalary,
+    sc.Worthiness
+ORDER BY 
+    TotalPoints DESC
+LIMIT 15;
+
+
+
+
+
+For this query, we selected the player who scored the most points and analyzed his team and we also used another query that selected the players that played the most games, by Unioning these two queries for a set operation, we successfully found the player that played many games while have contributed a lot to his team(By selecting his teamID), we used these statistics to analysis his contact worthiness because the points he scored in a season can represent the most influence than other statistics such as rebound and blocks (blks and reb in our database, which we will do a similar query for this two).
+(SELECT 
+    p.name AS PlayerName,
+    t.TeamName,
+    s.PTS AS TotalPoints,
+    s.G AS GamesPlayed
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerID = s.playerID
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+ORDER BY 
+    s.PTS DESC
+LIMIT 15)
+
+Union
+
+(SELECT 
+    p.name,
+    t.TeamName,
+    s.PTS,
+    s.G
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerID = s.playerID
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+ORDER BY 
+    s.G DESC
+LIMIT 15);
+
+For this query, we aimed to analyze the player’s performance with the Users who have followed him, and this can determine a business potential for the commercial market value for a team and a player, which should be an important factor to value since that we need to focus on what beyond the traditional stats. These commercial values are also important for a contract while the player’s performance is important. (For example, a handsome player with fewer points per game may be more worthiness of his contract because he has many followers compared with a player 
+that have higher points per game with less followers because fans tend to buy commercials from the handsome player)
+
+
+
+
+SELECT 
+    p.playerID,
+    p.name AS PlayerName,
+    s.PTS AS TotalPoints,
+    (COUNT(ufp.Emailaddress)) AS Followers,
+    sc.AnnualSalary
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerID = s.playerID
+JOIN 
+    UserFollowsPlayer ufp ON p.playerID = ufp.playerID
+JOIN 
+    SalaryContracts sc ON p.ContractID = sc.ContractID
+GROUP BY 
+    p.playerID, 
+    p.name,
+    s.PTS,
+    sc.AnnualSalary
+ORDER BY 
+    Followers DESC, 
+    TotalPoints DESC
+ Limit 15;
+
+
+
+
+1.
+EXPLAIN ANALYZE
+SELECT 
+    p.TeamID,
+    t.TeamName,
+    SUM(s.PTS) AS TotalTeamScore,
+    AVG(s.ThreePP) AS AvgThreePointPercentage,
+    AVG(s.FTP) AS AvgFreeThrowPercentage
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerid = s.playerid
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+WHERE 
+    CAST(SUBSTRING_INDEX(t.Records, '-', 1) AS UNSIGNED) >= 40
+GROUP BY 
+    p.TeamID,
+    t.TeamName;
+
+
+Before adding indexes:
+
+Cost of nested loop inner join is 1554.8 and 1207.95 respectively.
+
+After adding index to Team.Records only
+
+Cost of nested loop inner join is 811.55 and 464.70 respectively.
+
+The table shows that the cost in the nested loop inner join has indeed reduced from 1207.95 to 464.70, indicating an improvement. The reduction in cost in the nested loop inner join is likely due to a combination of filter pushdown optimization, effective index usage, and optimized join strategies by the database optimizer. This improvement signifies that the indexing strategy and query optimization techniques are indeed making a positive impact on the query performance.
+
+
+
+
+After adding index to Team.TeamName only
+
+Cost of nested loop inner join is 1554.8 and 1207.95 respectively.
+
+After indexing the Records column in the Team table, there was no significant change in the cost of the join in the provided query. While indexing can often improve query performance, its effectiveness depends on various factors such as selectivity, cardinality, index size, statistics, and query hints. In this case, indexing the “TeamName” column did not lead to noticeable performance gains, suggesting that further optimization strategies may be necessary or that the query itself may not be well-suited for index usage.
+
+
+
+
+
+
+
+
+
+After adding index to Team.Records and Team.TeamName
+
+
+Cost of nested loop inner join is 811.55 and 464.70 respectively.
+
+The table shows that the cost in the nested loop inner join has indeed reduced from 1207.95 to 464.70, indicating an improvement. The reduction in cost in the nested loop inner join is likely due to a combination of filter pushdown optimization, effective index usage, and optimized join strategies by the database optimizer. This improvement signifies that the indexing strategy and query optimization techniques are indeed making a positive impact on the query performance.
+
+
+
+2.
+SELECT 
+    p.name,
+    p.playerID,
+    SUM(s.PTS) AS TotalPoints,  
+    sc.AnnualSalary,
+    sc.Worthiness
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerid = s.playerid
+JOIN 
+    SalaryContracts sc ON p.ContractID = sc.ContractID
+GROUP BY 
+    p.name,
+    p.playerID,
+    sc.AnnualSalary,
+    sc.Worthiness
+ORDER BY 
+    TotalPoints DESC
+LIMIT 15;
+
+I attempted to optimize the query by indexing non-primary key attributes in 'GROUP BY' and 'ORDER BY'. Creating indexes on the players(name), SalaryContracts(AnnualSalary), and SalaryContracts(Worthiness) columns can potentially optimize the query. Since the query groups by sc.AnnualSalary, an index on this column can facilitate faster grouping operations. 
+Before adding indexes:
+
+Cost of nested loop inner join is 811.55 and 464.70 respectively.
+
+After adding index to Players.Name only
+CREATE INDEX idx_player_name ON players(name);
+
+The cost did not change significantly.
+CREATE INDEX idx_salary_annual ON SalaryContracts(AnnualSalary);
+
+The cost did not change significantly.
+CREATE INDEX idx_stats_pts ON stats(PTS);
+
+The cost did not change significantly. This might be due to the use of PTS in the SUM function, leading to index invalidation. This occurs because the database needs to perform a full table scan first to obtain the data, and then proceed with filtering and calculation, causing the index to become ineffective. Additionally, this is accompanied by performance issues.
+3.
+(SELECT 
+    p.name AS PlayerName,
+    t.TeamName,
+    s.PTS AS TotalPoints,
+    s.G AS GamesPlayed
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerID = s.playerID
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+ORDER BY 
+    s.PTS DESC
+LIMIT 15)
+
+Union
+
+(SELECT 
+    p.name,
+    t.TeamName,
+    s.PTS,
+    s.G
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerID = s.playerID
+JOIN 
+    Team t ON p.TeamID = t.TeamID
+ORDER BY 
+    s.G DESC
+LIMIT 15);
+
+Before adding indexes, After adding index to stats.G only, After adding index to stats.PTS only and After adding index to stats.G and stats.PTS all have the same results as shown below using EXPLAIN ANALYZE command. Four cost of nested loop inner join are all 811.55.
+
+
+After indexing the G and/or PTS column in the stats table, there was no significant change in the cost of the join in the provided query. While indexing can often improve query performance, its effectiveness depends on various factors such as selectivity, cardinality, index size, statistics, and query hints. In this case, indexing the stats.G and/or stats.PTS  column did not lead to noticeable performance gains, suggesting that further optimization strategies may be necessary or that the query itself may not be well-suited for index usage.
+
+
+
+
+4.
+SELECT 
+    p.playerID,
+    p.name AS PlayerName,
+    s.PTS AS TotalPoints,
+    (COUNT(ufp.Emailaddress)+ FLOOR(RAND() * 418)) AS Followers,
+    sc.AnnualSalary
+FROM 
+    players p
+JOIN 
+    stats s ON p.playerID = s.playerID
+JOIN 
+    UserFollowsPlayer ufp ON p.playerID = ufp.playerID
+JOIN 
+    SalaryContracts sc ON p.ContractID = sc.ContractID
+GROUP BY 
+    p.playerID, 
+    p.name,
+    s.PTS,
+    sc.AnnualSalary
+ORDER BY 
+    Followers DESC, 
+    TotalPoints DESC
+ Limit 15;
+I attempted to optimize the query by indexing non-primary key attributes in 'GROUP BY' and 'ORDER BY'. 
+
+CREATE INDEX idx_stats_pts ON stats(PTS);
+
+CREATE INDEX idx_ufp_email ON UserFollowsPlayer(Emailaddress);
+
+CREATE INDEX idx_salary_annualsalary ON SalaryContracts(AnnualSalary);
+
+
+there was no significant change in the cost of the join in the provided query. While indexing can often improve query performance, its effectiveness depends on various factors such as selectivity, cardinality, index size, statistics, and query hints. In this case, indexing the ufp.Emailaddress and/or stats.PTS  column did not lead to noticeable performance gains, suggesting that further optimization strategies may be necessary or that the query itself may not be well-suited for index usage.
+

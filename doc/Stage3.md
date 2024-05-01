@@ -298,6 +298,7 @@ GROUP BY
     t.TeamName;
 
 
+<img width="1093" alt="截屏2024-04-30 22 33 20" src="https://github.com/cs411-alawini/sp24-cs411-team085-TeamCoconut/assets/102498463/bd864aa1-0357-41a5-9bc5-18733c648f87">
 
 
 

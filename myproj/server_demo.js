@@ -29,7 +29,7 @@ app.use(express.static(__dirname + '../public'));
 
 /* GET home page, respond by rendering index.ejs */
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Mark Attendance' });
+  res.render('index_demo', { title: 'Mark Attendance' });
 });
 
 app.get('/success', function(req, res) {

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NBA Player Stats</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        NBA Player Information
+      </div>
+      <div class="card-body">
+        <form action="/search" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" name="playerID" placeholder="Enter player ID...">
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+          </div>
+        </form>
+
+      </div>
+      <div class="card-footer" id="playerInfo"></div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for handling form submissions
+    document.getElementById('searchForm').onsubmit = function(event) {
+      event.preventDefault();
+      var playerID = document.getElementById('playerID').value;
+
+      // Using fetch to send a POST request
+      fetch('/search', {
+        method: 'POST', // Specifying the method as POST
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded', // Header to specify the type of data being sent
+        },
+        body: `playerID=${encodeURIComponent(playerID)}` // Encoding and including the playerID in the body
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.name) {
+          document.getElementById('playerInfo').innerHTML = 'Name: ' + data.name + ', Position: ' + data.position;
+        } else {
+          document.getElementById('playerInfo').innerHTML = 'Player not found';
+        }
+      })
+      .catch(error => console.error('Error fetching player data:', error));
+    };
+
+    // Assuming you have a server-side route set up to handle the search and display the profile, e.g., /playerprofile
+    // document.getElementById('searchForm').onsubmit = function(event) {
+    //   event.preventDefault();
+    //   var playerName = document.getElementById('searchInput').value;
+    //   window.location.href = '/playerprofile?name=' + encodeURIComponent(playerName);
+    // };
+
+
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Player Follow</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-4">
+    <h1>NBA Player Follow</h1>
+    
+    <!-- Follow Player Form -->
+    <div class="card">
+      <div class="card-body">
+        <h2>Follow Player</h2>
+        <form id="followForm">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="playerID">Player ID:</label>
+            <input type="text" class="form-control" id="playerID" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Follow Player</button>
+          <div id="followMessage" class="mt-2"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#followForm').submit(function(event) {
+        event.preventDefault();
+        var userEmail = $('#email').val();
+        var playerID = $('#playerID').val();
+        $.post('/followPlayer', { email: userEmail, playerID: playerID }, function(data) {
+          $('#followMessage').text(data);
+          $('#email').val('');
+          $('#playerID').val('');
+        }).fail(function() {
+          $('#followMessage').text('Failed to follow player.');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
